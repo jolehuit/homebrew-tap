@@ -30,6 +30,6 @@ class Clother < Formula
   end
 
   test do
-    assert_match "Clother v#{version}", shell_output("#{bin}/clother --version")
+    assert_match "Clother v#{version}", shell_output(bin/"clother --version")
   end
 end
