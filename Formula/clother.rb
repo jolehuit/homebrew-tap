@@ -1,8 +1,8 @@
 class Clother < Formula
   desc "Switch between Claude Code-compatible LLM providers from one CLI"
   homepage "https://github.com/jolehuit/clother"
-  url "https://github.com/jolehuit/clother/archive/refs/tags/v3.0.8.tar.gz"
-  sha256 "9ffc6b6059f5d198fe162d259ae1a065de3508bbe9413c88b2c865cd5f4af916"
+  url "https://github.com/jolehuit/clother/archive/refs/tags/v3.0.4.tar.gz"
+  sha256 "3636c0c734a8ed50e0976d287c276e62ef7b1953c0da09d9b50e009d4df5b9f5"
   license "MIT"
 
   depends_on "go" => :build
@@ -23,6 +23,7 @@ class Clother < Formula
 
       Symlinks point directly to the Homebrew-managed binary, so
       `brew upgrade clother` keeps them up to date automatically.
+      You can also run `clother update` which routes to brew upgrade.
 
       Claude Code CLI must be installed separately:
         curl -fsSL https://claude.ai/install.sh | bash
