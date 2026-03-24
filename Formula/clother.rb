@@ -15,21 +15,16 @@ class Clother < Formula
     system "go", "build", *std_go_args(ldflags:), "./cmd/clother"
   end
 
-  def post_install
-    system "#{bin}/clother", "install", "--yes"
-  end
-
   def caveats
     <<~EOS
-      Provider symlinks (clother-zai, clother-kimi, etc.) were created in
-      ~/bin (macOS) or ~/.local/bin (Linux) and point directly to the
-      Homebrew-managed binary, so `brew upgrade clother` keeps them up to date.
-
-      If Claude Code was not installed yet, run:
+      Run the following command to create provider launcher symlinks
+      (clother-zai, clother-kimi, etc.) in ~/bin:
         clother install
-      once after installing it to add the `claude` shim.
 
-      Claude Code CLI:
+      Symlinks point directly to the Homebrew-managed binary, so
+      `brew upgrade clother` keeps them up to date automatically.
+
+      Claude Code CLI must be installed separately:
         curl -fsSL https://claude.ai/install.sh | bash
     EOS
   end
