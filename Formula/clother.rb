@@ -1,8 +1,8 @@
 class Clother < Formula
   desc "Switch between Claude Code-compatible LLM providers from one CLI"
   homepage "https://github.com/jolehuit/clother"
-  url "https://github.com/jolehuit/clother/archive/refs/tags/v3.0.7.tar.gz"
-  sha256 "b5d3d8a0b6e73729bf5efb41f8a5466eb81675d11b5a44b79405c96199ed226a"
+  url "https://github.com/jolehuit/clother/archive/refs/tags/v3.0.8.tar.gz"
+  sha256 "ae5b67d531c3c43f9ce52ea359c01ad72ce17ccb84e3560abef1759a51c79ea0"
   license "MIT"
 
   livecheck do
