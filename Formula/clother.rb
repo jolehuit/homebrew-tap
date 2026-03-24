@@ -1,9 +1,14 @@
 class Clother < Formula
   desc "Switch between Claude Code-compatible LLM providers from one CLI"
   homepage "https://github.com/jolehuit/clother"
-  url "https://github.com/jolehuit/clother/archive/refs/tags/v3.0.6.tar.gz"
-  sha256 "73b3fad138dde595afc2f5d1c90d242e8bd0e02c1367dd99df5a4f451d68957c"
+  url "https://github.com/jolehuit/clother/archive/refs/tags/v3.0.7.tar.gz"
+  sha256 "b5d3d8a0b6e73729bf5efb41f8a5466eb81675d11b5a44b79405c96199ed226a"
   license "MIT"
+
+  livecheck do
+    url :stable
+    regex(/^v?(\d+(?:\.\d+)+)$/i)
+  end
 
   depends_on "go" => :build
 
@@ -13,24 +18,49 @@ class Clother < Formula
       -X github.com/jolehuit/clother/internal/version.Value=#{version}
     ]
     system "go", "build", *std_go_args(ldflags:), "./cmd/clother"
+
+    # Static provider launchers — available immediately after brew install.
+    %w[
+      native
+      zai zai-cn
+      minimax minimax-cn
+      kimi moonshot
+      deepseek
+      mimo
+      alibaba alibaba-us alibaba-cn
+      ve
+      ollama lmstudio llamacpp
+    ].each do |provider|
+      bin.install_symlink bin/"clother" => "clother-#{provider}"
+    end
+
+    # Gateway symlinks for dynamic providers (OpenRouter aliases, custom).
+    # Usage: clother-or <alias>  /  clother-custom <provider-name>
+    bin.install_symlink bin/"clother" => "clother-or"
+    bin.install_symlink bin/"clother" => "clother-custom"
   end
 
   def caveats
     <<~EOS
-      Run the following command to create provider launcher symlinks
-      (clother-zai, clother-kimi, etc.) in ~/bin:
-        clother install
-
-      Symlinks point directly to the Homebrew-managed binary, so
-      `brew upgrade clother` keeps them up to date automatically.
-      You can also run `clother update` which routes to brew upgrade.
-
       Claude Code CLI must be installed separately:
         curl -fsSL https://claude.ai/install.sh | bash
+
+      All provider launchers (clother-native, clother-zai, clother-kimi, etc.)
+      are already available in #{HOMEBREW_PREFIX}/bin — no extra setup needed.
+
+      For OpenRouter aliases or custom providers, configure first then use the
+      gateway launchers:
+        clother config openrouter
+        clother-or <alias> [args...]
+
+        clother config custom
+        clother-custom <provider-name> [args...]
     EOS
   end
 
   test do
     assert_match "Clother v#{version}", shell_output("#{bin/"clother"} --version")
+    output = shell_output("#{bin/"clother"} list 2>&1")
+    assert_match "native", output
   end
 end
