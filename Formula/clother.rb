@@ -1,8 +1,8 @@
 class Clother < Formula
   desc "Switch between Claude Code-compatible LLM providers from one CLI"
   homepage "https://github.com/jolehuit/clother"
-  url "https://github.com/jolehuit/clother/archive/refs/tags/v3.0.7.tar.gz"
-  sha256 "595bd2d2f0ea22d922a853c7a05d079e9fadc5fbd8833a6e13de1a0f40c1ff42"
+  url "https://github.com/jolehuit/clother/archive/refs/tags/v3.0.8.tar.gz"
+  sha256 "9ffc6b6059f5d198fe162d259ae1a065de3508bbe9413c88b2c865cd5f4af916"
   license "MIT"
 
   depends_on "go" => :build
@@ -15,18 +15,21 @@ class Clother < Formula
     system "go", "build", *std_go_args(ldflags:), "./cmd/clother"
   end
 
+  def post_install
+    system "#{bin}/clother", "install", "--yes"
+  end
+
   def caveats
     <<~EOS
-      After installing Claude Code, run:
+      Provider symlinks (clother-zai, clother-kimi, etc.) were created in
+      ~/bin (macOS) or ~/.local/bin (Linux) and point directly to the
+      Homebrew-managed binary, so `brew upgrade clother` keeps them up to date.
+
+      If Claude Code was not installed yet, run:
         clother install
-      to create the provider launcher symlinks (clother-zai, clother-kimi, etc.)
-      in ~/bin (macOS) or ~/.local/bin (Linux).
+      once after installing it to add the `claude` shim.
 
-      Symlinks are created as absolute references to the Homebrew binary, so
-      `brew upgrade clother` propagates automatically without re-running
-      `clother install`.
-
-      Claude Code CLI must be installed separately:
+      Claude Code CLI:
         curl -fsSL https://claude.ai/install.sh | bash
     EOS
   end
