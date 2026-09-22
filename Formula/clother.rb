@@ -1,8 +1,8 @@
 class Clother < Formula
   desc "Switch between Claude Code-compatible LLM providers from one CLI"
   homepage "https://github.com/jolehuit/clother"
-  url "https://github.com/jolehuit/clother/archive/refs/tags/v3.0.10.tar.gz"
-  sha256 "224e8723c030ddb278c6b7497254f309899e1a66a1e650cf356ea7ce6d1233d7"
+  url "https://github.com/jolehuit/clother/archive/refs/tags/v3.0.11.tar.gz"
+  sha256 "fc22293eacf8cb5fda7edb5b5e36e1f0cea4d12439232df8cd39b69cb2143e28"
   license "MIT"
 
   livecheck do
@@ -24,10 +24,12 @@ class Clother < Formula
       native
       zai zai-cn
       minimax minimax-cn
-      kimi moonshot
+      kimi kimi-cn
+      moonshot moonshot-cn
       deepseek
       mimo
-      alibaba alibaba-us alibaba-cn
+      alibaba alibaba-cn
+      alibaba-token-plan alibaba-token-plan-cn
       ve
       ollama lmstudio llamacpp
     ].each do |provider|
